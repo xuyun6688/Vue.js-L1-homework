@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<input id="todo" type="text" v-model="msg"/> 
+			<input id="todo" type="text" v-model="msg" @keyup.enter.exact="addTodo" /> 
 			<button id="add" @click="addTodo">添加</button>
 			<ul>
 				<li v-for="(item, index) in todo" v-bind:key="index" :class="{finish:item.isFinished}" @click="finishTodo(item)">{{item.task}}</li>
@@ -35,9 +35,14 @@
 					addTodo: function() {
 //						console.log(this.msg)
 //						console.log(this.todo)
-						this.todo.push({task:this.msg, isFinished: false});
-						this.msg = "";
+						if(this.msg == "") {
+							alert("请输入")
+						} else {
+							this.todo.push({task:this.msg, isFinished: false});
+							this.msg = "";
+						}	
 					},
+					
 					finishTodo: function(item) {
 						item.isFinished = true;
 					}
